@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div id='play_canvas'></div>
+    <div>
+{#        <input id="latitude" type="text" value="33.8391574">#}
+{#        <input id="longitude" type="text" value="132.76557520000006">#}
+        <form action="{{ url_for('add_fields') }}" method=post class=add-entry>
+            <dl>
+                <dt>農場名:
+                <dd><input type=text size=30 name=name>
+                <dt>品目:
+                <dd><input type=text size=30 name=commodity>
+                <dt>メモ（地権者、有機JAS開始年月日等）:
+                <dd><textarea name=memo rows=3 cols=40></textarea>
+                <dt>Polygon:
+                <dd><input id="play" type=text size="150" name=latlng value="">
+                <dd><input type=submit value='圃場追加'>
+            </dl>
+        </form>
+
+        <div id="lon"></div>
+        <div id="lat"></div>
+    </div>
+{% endblock %}

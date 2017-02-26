@@ -1,0 +1,42 @@
+<!doctype html>
+<head>
+    <title>FarmBox</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+
+
+</head>
+
+<body>
+<nav id="header">
+    <a id="logo" href="{{ url_for('show_fields') }}">FarmBox</a>
+    <ul class="header-nav">
+        <li><a href="{{ url_for('show_fields') }}" data-pjax="main" class='js-pjax'>農場データ</a></li>
+{#        <li><a href="{{ url_for('add') }}" data-pjax="main" class='js-pjax'>ADD</a></li>#}
+        <li><a href="{{ url_for('show_map') }}" data-pjax="main" class='js-pjax'>地図</a></li>
+{#        <li><a href="{{ url_for('show_play') }}" data-pjax="main" class='js-pjax'>追加</a></li>#}
+        <li><a href="{{ url_for('show_pop') }}" data-pjax="main" class='js-pjax'>作業記録</a></li>
+{#        <li><a data-pjax="main" class='js-pjax'>圃場記録</a></li>#}
+        {% if not session.logged_in %}
+            <li><a href="{{ url_for('login') }}">ログイン</a></li>
+        {% else %}
+            <li><a href="{{ url_for('show_fields') }}">ログアウト</a></li>
+            {#    <a href="{{ url_for('logout') }}">log out</a>#}
+        {% endif %}
+    </ul>
+</nav>
+<div id="main">
+    {% block body %}{% endblock %}
+</div>
+
+    <script src="/static/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src="/static/js/jquery.pjax.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry"></script>
+    <script src="/static/js/call.js" type="text/javascript"></script>
+    <script src="/static/js/mapInit.js" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+</body>
+</html>

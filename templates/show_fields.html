@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="analytics-page container-fluid">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-3 col-sm-push-9 col-lg-2 col-lg-push-10 analytics-sidebar">
+                <div>
+                    <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#myModal">農場追加</button>
+                    <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog modal-dialog-center" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+{#                                    <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+                                    <div class="container-fluid">
+                                        <h4 class="modal-title" id="gridSystemModalLabel">
+                                            どのように農場を追加しますか？</h4>
+                                        <div class="row">
+                                            <div class="modal-col col-sm-6 col-xs-12">
+                                                <p><img height="78" src="/static/img/field_icon.png"></p>
+                                                <p>web地図を使って、圃場の形を選ぶか、自分で直接描きます</p>
+                                                <a href="{{ url_for('show_play') }}"
+                                                   class="btn btn-success btn-lg btn-block">マニュアル入力</a>
+                                            </div>
+                                            <div class="modal-col col-sm-6 col-xs-12">
+                                                <p><span class="glyphicon glyphicon-file"></span></p>
+                                                <p>"シェープファイル"をアップロードして、一度に全圃場を追加します</p>
+{#                                                （農村振興局設計課（農地情報化支援対策）#}
+                                                <a class="btn btn-success btn-lg btn-block">ファイルアップロード</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="analytics-sidebar-item hidden-xs">
+                    <div class="analytics-sidebar-item-title">品目</div>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                            <span>全品目</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation"><a href="#">ごぼう</a></li>
+                            <li role="presentation"><a href="#">大根</a></li>
+                            <li role="presentation"><a href="#">甘藷</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="analytics-sidebar-item hidden-xs">
+                    <div class="analytics-sidebar-item-title">グループ</div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">下水流地区</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">菊池西地区</label>
+                    </div>
+                </div>
+                <div class="analytics-sidebar-item hidden-xs">
+                    <div class="analytics-sidebar-item-title">基礎データ</div>
+                    <div class="big-stats">
+                        <h4><span>16</span><span> </span><span class="unit">ha</span><span> </span><span class="big-num-desc">／総作付け面積</span></h4>
+                        <h4><span>10</span><span> </span><span class="unit">ha</span><span> </span><span class="big-num-desc">／総耕地面積</span></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-9 col-sm-pull-3 col-lg-10 col-lg-pull-2 analytics-sidebar-content">
+                {% for field in fields %}
+                    <div class="fields col-xs-6 col-sm-4 col-md-3">
+                        <div class="fields-item">
+                            <div>
+                                <img width="150" height="150" src="/static/img/sample_field.png">
+                            </div>
+                            <div class="fields-item-content">
+                                <h5>{{ field.name }}</h5>
+                                <span class="commodity">{{ field.commodity }}</span><br>
+                                <span class="memo">{{ field.memo|safe }}</span><br>
+                                {#        {{ field.id }}<br>#}
+                                {% for lat in latlng if lat.id == field.id %}
+                                    <span class="latlng">{{ lat.lat }}&nbsp;{{ lat.lng }}</span>
+                                    {#            <li>{{ lat.id }}&nbsp;{{ lat.lat }}&nbsp;{{ lat.lng }}#}
+                                {% else %}
+                                    <span><em>NO DATA</em></span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <ul>
+                        <li><em>NO FIELDS</em></li>
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
